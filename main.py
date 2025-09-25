@@ -57,7 +57,7 @@ async def main():
     finally:
         # Останавливаем мониторинг
         logger.info("Остановка мониторинга...")
-        monitor.stop_monitoring()
+        #monitor.stop_monitoring()
         monitoring_task.cancel()
         try:
             await monitoring_task
