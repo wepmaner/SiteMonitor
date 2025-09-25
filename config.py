@@ -13,7 +13,7 @@ port = int(os.getenv('DB_PORT'))
 user = os.getenv('DB_USER')
 password = os.getenv('DB_PASSWORD')
 db_name = os.getenv('DB_NAME')
-admin_id = 312731525
+admin_id = 0
 
 # Настройки логирования
 log_file = os.getenv('LOG_FILE', 'app.log')
