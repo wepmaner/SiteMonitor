@@ -209,8 +209,9 @@ class SiteMonitor:
         site_report = await self.create_report(site.name, days=1)
         report_text = site_report + "\n\n"
         file = await self.plot_response_time(name=site.name)
-        photo = FSInputFile(file)   
-        await self.bot.send_photo(chat_id=config.admin_id, photo=photo,caption=report_text)
+        photo = FSInputFile(file)  
+        return photo, report_text
+       
         #await self.bot.send_message(config.admin_id, report_text, parse_mode="HTML")
 
     async def weekly_report_task(self):

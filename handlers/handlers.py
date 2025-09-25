@@ -85,7 +85,8 @@ async def notifrecovery(callback_query: types.CallbackQuery, callback_data: cb.S
 @router.callback_query(cb.SiteAction.filter(F.action=='report'))
 async def notifrecovery(callback_query: types.CallbackQuery, callback_data: cb.SiteAction):
     site = next((s for s in callback_query.bot.monitor.sites if s.name == callback_data.name), None)
-    await callback_query.bot.monitor.send_daily_report(site.name)
+    photo, report_text= await callback_query.bot.monitor.send_daily_report(site.name)
+    await callback_query.bot.send_photo(chat_id=callback_query.message.chat.id, photo=photo,caption=report_text)
 
 @router.callback_query(cb.SiteAction.filter(F.action=='export'))
 async def notifrecovery(callback_query: types.CallbackQuery, callback_data: cb.SiteAction):
@@ -93,5 +94,5 @@ async def notifrecovery(callback_query: types.CallbackQuery, callback_data: cb.S
     file_path = await callback_query.bot.monitor.export_report_csv(site.name)
     if file_path:
         input_file = FSInputFile(file_path)
-        await callback_query.bot.send_document(chat_id=config.admin_id, document=input_file)
+        await callback_query.bot.send_document(chat_id=callback_query.message.chat.id, document=input_file)
     #await callback_query.message.edit_text(f'Настройка уведомлений для сайта {callback_data.name}', parse_mode="HTML", disable_web_page_preview=True,reply_markup=gui.notification(site))
